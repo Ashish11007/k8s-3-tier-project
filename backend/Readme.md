@@ -39,19 +39,14 @@ mvn -version
 ## Step 3: Build the Spring Boot Application
 
 ### Update DB credentials in application.properties:
-```
-pwd
-```
 
-```bash
-vim backend/src/main/resources/application.properties
-```
 ```shell
-spring.datasource.url=jdbc:mariadb://localhost:3306/student_db
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.show-sql=true
+vim backend/src/main/resources/application.properties
+
+   server.port=8080
+   spring.datasource.url=jdbc:mariadb://<DB_HOST>:3306/<DB_NAME>
+   spring.datasource.username=<DB_USER>
+   spring.datasource.password=<DB_PASS>
 ```
 
 ### Build springboot Application using maven
@@ -75,6 +70,4 @@ http://localhost:8080
 
 ### Step 5: Keep the Application Running
 
-
 To keep the application running in the background, you can use nohup or a similar method. 
-
