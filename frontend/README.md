@@ -29,12 +29,10 @@ npm install
 
 ## 3. Build the React Application for Production
 
-Update backend URL in .env file
+Update backend IP in .env file
 
 ```shell
 vim .env 
-
-    VITE_API_URL = "http://<BACKEND_PUBLIC_IP>:8080/api"
 ```
 
 To build the React application for production, run:
@@ -52,5 +50,6 @@ apt install apache2 -y
 systemctl start apache2
 cp -rf dist/* /var/www/html/
 ```
+
 
 You can access the application on http://localhost:80
