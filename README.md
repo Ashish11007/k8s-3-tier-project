@@ -56,3 +56,28 @@ EXIT;
 3. DB_PASS
 4. DB_PORT
 5. DB_NAME
+
+---
+## Docker compose Installation 
+```
+apt install docker-compose -y
+```
+- varify docker compose is avalibal or not 
+
+```
+docker-compose --version
+```
+## docker compose file 
+- Create and start containers in detach way 
+```
+docker-compose up -d
+```
+
+- Stop and remove resources
+```
+docker-compose down 
+```
+- https://docs.docker.com/compose/intro/features-uses/
+
+
+
