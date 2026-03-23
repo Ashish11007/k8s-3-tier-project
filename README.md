@@ -41,6 +41,12 @@ Create a new database and user:
 CREATE DATABASE student_db;
 GRANT ALL PRIVILEGES ON springbackend.* TO 'username'@'localhost' IDENTIFIED BY 'your_password';
 ```
+in this case 
+```sql
+CREATE DATABASE student_db;
+GRANT ALL PRIVILEGES ON springbackend.* TO 'admin'@'localhost' IDENTIFIED BY 'Redhat123hi';
+```
+
 Replace username and your_password with your desired username and password.
 
 Exit MariaDB:
