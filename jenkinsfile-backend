@@ -95,6 +95,11 @@ pipeline {
                     aws eks update-kubeconfig --name my-eks-cluster --region us-east-2
                     kubectl apply -f backend-deployment.yaml
                     kubectl apply -f backend-svc.yaml
+                    sleep 30
+                    kubectl get pods
+                    sleep 30
+                    kubectl get pods
+                    kubectl get svc -o wide
                     '''
                 }    
             }
