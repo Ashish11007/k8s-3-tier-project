@@ -24,7 +24,7 @@ pipeline {
                 echo 'Build is successful'
             }
             post {
-                always {
+                success {
                     archiveArtifacts artifacts: 'frontend/dist/**', fingerprint: true
                 }
             }

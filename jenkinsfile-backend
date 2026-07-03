@@ -27,7 +27,7 @@ pipeline {
                 echo 'Build is successful'
             }
             post {
-                always {
+                success {
                     archiveArtifacts artifacts: 'backend/target/*.jar', fingerprint: true
                 }
             }
@@ -115,4 +115,3 @@ pipeline {
         }
     }
 }
-
