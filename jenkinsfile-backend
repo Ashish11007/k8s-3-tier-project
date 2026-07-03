@@ -87,5 +87,27 @@ pipeline {
                 '''
             }
         }
+
+        stage('Deploy to EKS') {
+            steps {
+                dir('backend') {
+                    sh '''
+                    aws eks update-kubeconfig --name my-eks-cluster --region us-east-2
+                    kubectl apply -f backend-deployment.yaml
+                    kubectl apply -f backend-svc.yaml
+                    '''
+                }    
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline succeeded'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
     }
 }
+
