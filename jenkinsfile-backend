@@ -4,7 +4,7 @@ pipeline {
     }
 
     environment {
-        my_aws_credentials = credentials('aws-access')
+        my_aws_credential = credentials('aws-access')
     }
 
     tools {
@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/mayurpandit25/EasyCRUD.git'
-                echo 'Cloning is successful'
+                echo 'clonning is successful'
             }
         }
 
@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Quality Gate') {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
@@ -64,54 +64,34 @@ pipeline {
 
         stage('SonarQube Report') {
             steps {
-                sh 'ls -la'
-                echo 'SonarQube analysis completed'
+                script {
+                    echo "SonarQube Report successfully generated"
+                }
             }
         }
 
         stage('Build With Docker') {
             steps {
                 dir('backend') {
-                    sh 'docker build -t backend .'
-                }
-                echo 'Docker build is successful'
-            }
-        }
-
-        stage('docker push to ECR') {
-            steps {
-                sh '''
-                aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 506995420953.dkr.ecr.us-east-2.amazonaws.com
-                docker tag backend:latest 506995420953.dkr.ecr.us-east-2.amazonaws.com/backend:latest
-                docker push 506995420953.dkr.ecr.us-east-2.amazonaws.com/backend:latest
-                '''
-            }
-        }
-
-        stage('Deploy to EKS') {
-            steps {
-                dir('backend') {
                     sh '''
-                    aws eks update-kubeconfig --name my-eks-cluster --region us-east-2
-                    kubectl apply -f backend-deployment.yaml
-                    kubectl apply -f backend-svc.yaml
-                    sleep 30
-                    kubectl get pods
-                    sleep 30
-                    kubectl get pods
-                    kubectl get svc -o wide
+                    docker build -t backend .
+                    docker images
                     '''
-                }    
+                }
             }
         }
-    }
-    
-    post {
-        success {
-            echo 'Pipeline succeeded'
-        }
-        failure {
-            echo 'Pipeline failed'
+
+        stage('Push Image To ECR') {
+            steps {
+                script {
+                    sh '''
+                    aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 506995420953.dkr.ecr.us-east-2.amazonaws.com
+                    docker tag backend:latest 506995420953.dkr.ecr.us-east-2.amazonaws.com/backend:latest
+                    docker push 506995420953.dkr.ecr.us-east-2.amazonaws.com/backend:latest
+                    '''
+                }
+            }
         }
     }
 }
+
