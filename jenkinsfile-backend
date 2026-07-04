@@ -92,6 +92,31 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy To EKS') {
+            steps {
+                dir('backend') {
+                    sh '''
+                    kubectl apply -f backend-deployment.yaml
+                    kubectl apply -f backend-svc.yaml
+                    kubectl get pods
+                    sleep 30
+                    kubectl get pods
+                    sleep 20
+                    kubectl get pods -o wide
+                    kubectl get svc -o wide
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded.'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
     }
 }
-
