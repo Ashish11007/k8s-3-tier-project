@@ -97,6 +97,7 @@ pipeline {
             steps {
                 dir('backend') {
                     sh '''
+                    aws eks update-kubeconfig --region us-east-2 --name my-eks-cluster1 
                     kubectl apply -f backend-deployment.yaml
                     kubectl apply -f backend-svc.yaml
                     kubectl get pods
